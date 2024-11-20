@@ -9,6 +9,8 @@ import android.preference.PreferenceManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import com.vuzix.ultralite.UltraliteSDK;
+
 import androidx.core.app.NotificationCompat;
 
 import org.hcilab.projects.nlogx.BuildConfig;
@@ -31,6 +33,7 @@ class NotificationObject {
 	private String packageName;
 	private long postTime;
 	private long systemTime;
+	private boolean vuzixConnected;
 
 	private boolean isClearable;
 	private boolean isOngoing;
@@ -104,6 +107,8 @@ class NotificationObject {
 		packageName = sbn.getPackageName();
 		postTime    = sbn.getPostTime();
 		systemTime  = System.currentTimeMillis();
+		UltraliteSDK vuzix = UltraliteSDK.get(context);
+		vuzixConnected = vuzix.isConnected();
 
 		isClearable = sbn.isClearable();
 		isOngoing   = sbn.isOngoing();
@@ -214,6 +219,7 @@ class NotificationObject {
 
 			// General
 			json.put("packageName",    packageName);
+			json.put("VuzixConnected",    vuzixConnected);
 			json.put("postTime",       postTime);
 			json.put("systemTime",     systemTime);
 			json.put("offset",         TimeZone.getDefault().getOffset(systemTime));

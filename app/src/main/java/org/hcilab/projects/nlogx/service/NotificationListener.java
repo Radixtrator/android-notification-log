@@ -16,7 +16,7 @@ import com.google.android.gms.location.ActivityRecognitionClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-
+import com.vuzix.ultralite.UltraliteSDK;
 import org.hcilab.projects.nlogx.misc.Const;
 import org.hcilab.projects.nlogx.misc.Util;
 
@@ -73,6 +73,8 @@ public class NotificationListener extends NotificationListenerService {
 	@Override
 	public void onNotificationPosted(StatusBarNotification sbn) {
 		try {
+			UltraliteSDK vuzix = UltraliteSDK.get(this);
+			boolean isConnected = vuzix.isConnected();
 			NotificationHandler notificationHandler = new NotificationHandler(this);
 			notificationHandler.handlePosted(sbn);
 		} catch (Exception e) {
